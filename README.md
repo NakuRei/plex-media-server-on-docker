@@ -24,11 +24,56 @@ This repository provides configuration and scripts to run [Plex Media Server](ht
 ## Backup
 
 Run `backup.sh` to back up the `config/` directory.
-Please ensure the directory specified in the `BACKUP_DIR` variable `backup.sh` before running the script.
+Ensure that the directory defined in the `BACKUP_DIR` variable exists before running the script.
 
 ```sh
 bash backup.sh
 ```
+
+## Restore
+
+To restore Plex configuration from a backup archive (config_YYYYmmdd_HHMMSS.tgz), follow the steps below.
+
+1. Stop Plex container
+
+```sh
+docker compose stop plex
+```
+
+2. Replace the current `config/` directory
+
+Backup the existing directory or remove it:
+
+```sh
+mv config config.bak_$(date +%Y%m%d_%H%M%S)
+mkdir config
+```
+
+3. Extract the backup archive
+
+Run this in the same directory as `compose.yaml`:
+
+```sh
+tar -xzvf /path/to/config_YYYYmmdd_HHMMSS.tgz
+```
+
+The archive contains a top-level config/ directory, which will be restored under the current directory.
+
+4. Fix ownership
+
+Match the UID/GID specified in the Compose configuration:
+
+```sh
+chown -R ${PLEX_UID}:${PLEX_GID} config
+```
+
+5. Start Plex
+
+```sh
+docker compose up -d
+```
+
+After startup, Plex Web UI should reflect the restored library and settings.
 
 ## Author
 
