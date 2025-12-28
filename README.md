@@ -61,10 +61,10 @@ The archive contains a top-level config/ directory, which will be restored under
 
 4. Fix ownership
 
-Match the UID/GID specified in the Compose configuration:
+Match the UID/GID specified in the Compose configuration and replace the placeholders below with those numeric values (for example, from `id -u` and `id -g`):
 
 ```sh
-chown -R ${PLEX_UID}:${PLEX_GID} config
+chown -R <PLEX_UID>:<PLEX_GID> config
 ```
 
 5. Start Plex
