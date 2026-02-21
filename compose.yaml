@@ -3,12 +3,12 @@ services:
     container_name: plex
     image: plexinc/pms-docker:latest
     restart: unless-stopped
-    network_mode: host  # DLNAなどを使いたい場合はhost推奨
+    network_mode: host  # Recommended to use host mode if you want to use DLNA, etc.
     environment:
-      - TZ=${TZ}  # タイムゾーン
-      - PLEX_UID=${PLEX_UID}  # ホストユーザーID（`id` コマンドで確認）
-      - PLEX_GID=${PLEX_GID}  # ホストグループID
-      - PLEX_CLAIM=${PLEX_CLAIM}  # Plexのclaimコード（任意、Plexアカウントと紐付けたい場合）
+      - TZ=${TZ}  # Timezone (e.g., "America/New_York")
+      - PLEX_UID=${PLEX_UID}  # Host user ID (check with `id` command)
+      - PLEX_GID=${PLEX_GID}  # Host group ID
+      - PLEX_CLAIM=${PLEX_CLAIM}  # Plex claim code (optional, for linking with Plex account)
     volumes:
-      - ./config:/config  # Plexの設定保存先
-      - /mnt/nas_buffalo:/data/music  # NASをマウントした音楽フォルダ
+      - ./config:/config  # Plex configuration storage
+      - /mnt/nas_buffalo:/data/music  # NAS-mounted music folder

@@ -7,24 +7,24 @@ readonly SERVICE="plex"
 readonly DATE_STR="$(date +%Y%m%d_%H%M%S)"
 readonly ARCHIVE="${BACKUP_DIR}/config_${DATE_STR}.tgz"
 
-# スクリプトのある場所に移動
+# Move to the script's directory
 cd "$(dirname "$0")"
 
-# バックアップ先を作成
+# Create backup directory if it doesn't exist
 mkdir -p "$BACKUP_DIR"
 
-# 途中で失敗しても最後に起動（dockerエラーは握り潰す）
+# Ensure the container is restarted even if the script fails (ignore docker errors)
 trap 'docker compose up -d "'"$SERVICE"'" >/dev/null 2>&1 || true' EXIT
 
-# コンテナを停止
+# Stop the container
 docker compose stop "$SERVICE"
 
-# バックアップを作成
+# Create backup
 tar -czvf "$ARCHIVE" \
   --exclude='config/Library/Application Support/Plex Media Server/Cache' \
   ./config
 
-# ローテーション
+# Rotation
 if find "$BACKUP_DIR" -maxdepth 1 -type f -name 'config_*.tgz' | grep -q .; then
   find "$BACKUP_DIR" -maxdepth 1 -type f -name 'config_*.tgz' -printf '%T@ %p\0' \
     | sort -z -nr \
