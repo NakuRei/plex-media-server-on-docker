@@ -21,6 +21,20 @@ This repository provides configuration and scripts to run [Plex Media Server](ht
 1. Access Plex Media Server at `http://<your-server-ip>:32400/web` and log in with your Plex account.
 1. Enjoy your media!
 
+### Update
+
+1. Take backup of the `config/` directory (see Backup section below).
+1. Stop Plex container:
+    ```sh
+    docker compose stop plex
+    ```
+1. Pull the latest image and restart the container:
+    ```sh
+    docker compose pull plex
+    docker compose up -d plex
+    ```
+1. Verify that Plex is running and your media library is intact.
+
 ## Backup
 
 Run `backup.sh` to back up the `config/` directory.
