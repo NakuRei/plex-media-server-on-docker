@@ -38,10 +38,12 @@ This repository provides configuration and scripts to run [Plex Media Server](ht
 ## Backup
 
 Run `backup.sh` to back up the `config/` directory.
-Ensure that the directory defined in the `BACKUP_DIR` variable exists before running the script.
+Archives are saved to `./backup/` by default. Set the `BACKUP_DIR` environment variable to change the destination (created automatically if it doesn't exist).
 
 ```sh
 bash backup.sh
+# or
+BACKUP_DIR=/path/to/backup bash backup.sh
 ```
 
 ## Restore
