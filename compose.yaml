@@ -11,4 +11,4 @@ services:
       - PLEX_CLAIM=${PLEX_CLAIM}  # Plex claim code (optional, for linking with Plex account)
     volumes:
       - ./config:/config  # Plex configuration storage
-      - /mnt/nas_buffalo:/data/music  # NAS-mounted music folder
+      - ${MEDIA_DIR:?MEDIA_DIR is not set}:/data/music  # Host media folder
